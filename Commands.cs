@@ -1,4 +1,5 @@
 ﻿
+using System.Globalization;
 using Telegram.Bot;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.InputFiles;
@@ -31,6 +32,25 @@ namespace YouTubeUploadUtilites
             }
             //await using Stream stream = System.IO.File.OpenRead(path);
 
+        }
+
+        public static async Task GetCountry(ITelegramBotClient botClient, Message message)
+        {
+            try
+            {
+                RegionInfo info = new RegionInfo(message.Text);
+                await botClient.SendTextMessageAsync(
+                    chatId: message.Chat.Id,
+                    text: $"Скорее всего это {info.DisplayName}",
+                    replyMarkup: Keyboards.GetStandKeyboard());
+            }
+            catch (ArgumentException argEx)
+            {
+                await botClient.SendTextMessageAsync(
+                    chatId: message.Chat.Id,
+                    text: "Не удалось найти страну по данному коду",
+                    replyMarkup: Keyboards.GetStandKeyboard());
+            }
         }
     }
 }

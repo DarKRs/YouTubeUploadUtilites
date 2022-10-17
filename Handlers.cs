@@ -74,6 +74,12 @@ namespace YouTubeUploadUtilites
                             text: "Пока что не реализованно",
                             replyMarkup: Keyboards.GetStandKeyboard());
                     return;
+                case "🌎 Получить страну по коду":
+                    await botClient.SendTextMessageAsync(
+                            chatId: message.Chat.Id,
+                            text: "Введите код страны",
+                            replyMarkup: new ForceReplyMarkup { Selective = true });
+                    return;
                 default:
                     return;
             }
@@ -98,6 +104,9 @@ namespace YouTubeUploadUtilites
                             chatId: message.Chat.Id,
                             text: "Отменено. Вы отправили не txt файл",
                             replyMarkup: Keyboards.GetStandKeyboard());
+                    return;
+                case String a when a.Contains("Введите код страны"):
+                    await Commands.GetCountry(botClient, message);
                     return;
             }
         }

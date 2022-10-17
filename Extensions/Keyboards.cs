@@ -13,6 +13,7 @@ namespace YouTubeUploadUtilites.Extensions
         {
             return new ReplyKeyboardMarkup(new[] {
                     new KeyboardButton[] { "✖️ Удалить дубликаты из Тэгов" /*, "🔎 Проверить соответствие тэгов и названия"*/ },
+                    new KeyboardButton[] { "🌎 Получить страну по коду"},
                 })
             {
                 ResizeKeyboard = true
