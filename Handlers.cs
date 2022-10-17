@@ -2,6 +2,8 @@
 using Telegram.Bot.Exceptions;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
+using Telegram.Bot.Types.ReplyMarkups;
+using YouTubeUploadUtilites.Extensions;
 
 namespace YouTubeUploadUtilites
 {
@@ -60,6 +62,18 @@ namespace YouTubeUploadUtilites
                             text: "Чинимся 🔨",
                             replyMarkup: Keyboards.GetStandKeyboard());
                     return;
+                case "✖️ Удалить дубликаты из Тэгов":
+                    await botClient.SendTextMessageAsync(
+                            chatId: message.Chat.Id,
+                            text: "Отправьте файл в формате .txt для удаления повторяющихся тэгов",
+                            replyMarkup: new ForceReplyMarkup { Selective = true });
+                    return;
+                case "🔎 Проверить соответствие тэгов и названия":
+                    await botClient.SendTextMessageAsync(
+                            chatId: message.Chat.Id,
+                            text: "Пока что не реализованно",
+                            replyMarkup: Keyboards.GetStandKeyboard());
+                    return;
                 default:
                     return;
             }
@@ -76,7 +90,15 @@ namespace YouTubeUploadUtilites
         {
             switch (message.ReplyToMessage?.Text)
             {
-
+                case String a when a.Contains("Отправьте файл в формате .txt для удаления повторяющихся тэгов"):
+                    if (message.Document != null && message.Document?.MimeType == "text/plain")
+                        await Commands.RemoveDuplicated(botClient, message);
+                    else
+                        await botClient.SendTextMessageAsync(
+                            chatId: message.Chat.Id,
+                            text: "Отменено. Вы отправили не txt файл",
+                            replyMarkup: Keyboards.GetStandKeyboard());
+                    return;
             }
         }
 
