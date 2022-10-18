@@ -9,7 +9,7 @@ class Program
 	private static TelegramBotClient botClient;
 	static async Task Main(string[] args)
 	{
-		botClient = new TelegramBotClient("5764626043:AAGozqWNEPdpYhGGUtQKTK4YnOLtm6KPD7g");
+		botClient = new TelegramBotClient("YOU-TOKEN-HERE");
 
 		if (!Directory.Exists(@"./Downloads/"))
 			Directory.CreateDirectory(@"./Downloads/");
